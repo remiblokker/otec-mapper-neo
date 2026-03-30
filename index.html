@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTEC Mapper Neo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <div id="map"></div>
+
+    <div id="controls">
+        <h3>OTEC Mapper Neo</h3>
+        <div class="control-group">
+            <label>Max pipe route length</label>
+            <input type="range" id="filter-distance" min="0" max="100" value="100" step="1">
+            <span id="filter-distance-val">100 km</span>
+        </div>
+        <div class="control-group">
+            <label>Min &Delta;T (worst month)</label>
+            <input type="range" id="filter-delta-t" min="15" max="28" value="15" step="0.5">
+            <span id="filter-delta-t-val">15 &deg;C</span>
+        </div>
+        <div class="legend">
+            <h4>Pipe Route Length</h4>
+            <div class="legend-item"><span class="dot green"></span> Excellent (&lt;4 km)</div>
+            <div class="legend-item"><span class="dot yellow"></span> Good (4-8 km)</div>
+            <div class="legend-item"><span class="dot orange"></span> Marginal (8-15 km)</div>
+            <div class="legend-item"><span class="dot red"></span> Poor (&gt;15 km)</div>
+            <div class="legend-item"><span class="dot grey"></span> No feasible route</div>
+        </div>
+        <div class="about">
+            <a href="#" id="about-link">About this tool</a>
+        </div>
+    </div>
+
+    <div id="about-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>OTEC Mapper Neo</h2>
+            <p>Interactive assessment tool for onshore OTEC (Ocean Thermal Energy Conversion) and SWAC (Sea Water Air Conditioning) sites.</p>
+            <h3>Data sources</h3>
+            <ul>
+                <li><strong>Bathymetry:</strong> GEBCO 2025 (15 arc-second grid)</li>
+                <li><strong>Temperature:</strong> World Ocean Atlas 2023 (monthly climatology)</li>
+                <li><strong>Currents:</strong> GLORYS12V1 reanalysis (Copernicus Marine)</li>
+            </ul>
+            <h3>Methodology</h3>
+            <p>Candidate sites are coastal points within the tropics (30N-30S) that have ocean depth of 1000m or more within 30 km. Sites are scored based on distance to deep water, temperature differential between surface and 1000m depth (worst month), pipe route quality, and cross-current intensity.</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <script src="js/map.js"></script>
+    <script src="js/sites.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

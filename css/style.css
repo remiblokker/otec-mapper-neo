@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+/* Controls panel (top-left) */
+#controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 16px;
+    width: 240px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-size: 13px;
+}
+
+#controls h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #1a3a5c;
+}
+
+.control-group {
+    margin-bottom: 10px;
+}
+
+.control-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.control-group input[type="range"] {
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+.control-group span {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Legend */
+.legend {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.legend h4 {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: #555;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.dot.green { background: #2ecc40; }
+.dot.yellow { background: #ffdc00; }
+.dot.orange { background: #ff851b; }
+.dot.red { background: #ff4136; }
+.dot.grey { background: #cccccc; }
+
+.about {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #ddd;
+}
+
+.about a {
+    color: #1a3a5c;
+    font-size: 12px;
+}
+
+/* Floating draggable panel */
+.floating-panel {
+    position: absolute;
+    z-index: 1000;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+.floating-panel.hidden {
+    display: none;
+}
+
+.floating-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px 6px 14px;
+    background: #f0f4f8;
+    cursor: grab;
+    user-select: none;
+    border-bottom: 1px solid #dde4ec;
+}
+
+.floating-panel-header:active {
+    cursor: grabbing;
+}
+
+.floating-panel-drag-hint {
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 0.3px;
+}
+
+.floating-panel-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.floating-panel-close:hover {
+    color: #333;
+}
+
+.floating-panel-body {
+    overflow-y: auto;
+}
+
+/* Popup content */
+.popup-container {
+    width: 480px;
+    font-size: 13px;
+}
+
+.popup-header {
+    padding: 14px 16px 8px;
+}
+
+.popup-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a3a5c;
+}
+
+.popup-location {
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px;
+}
+
+.popup-coords {
+    font-size: 10px;
+    color: #bbb;
+    margin-top: 1px;
+    font-family: monospace;
+}
+
+.popup-metrics {
+    padding: 0 16px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 16px;
+}
+
+.popup-metric {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.popup-metric-label {
+    color: #777;
+    font-size: 12px;
+}
+
+.popup-metric-value {
+    font-weight: 600;
+    color: #333;
+    font-size: 12px;
+}
+
+/* Tabs */
+.popup-tabs {
+    display: flex;
+    border-bottom: 2px solid #eee;
+    padding: 0 16px;
+}
+
+.popup-tab {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.popup-tab:hover {
+    color: #555;
+}
+
+.popup-tab.active {
+    color: #1a3a5c;
+    border-bottom-color: #1a3a5c;
+}
+
+/* Chart area */
+.popup-chart-area {
+    padding: 10px 12px 12px;
+    background: #fafafa;
+    border-radius: 0 0 10px 10px;
+}
+
+.popup-chart-empty {
+    text-align: center;
+    color: #aaa;
+    font-size: 12px;
+    padding: 40px 0;
+}
+
+/* Temperature panel */
+.temp-panel {
+    display: flex;
+    gap: 20px;
+    padding: 6px 4px;
+    align-items: flex-start;
+}
+
+.temp-gradient-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.temp-gradient-label {
+    font-size: 10px;
+    color: #888;
+    margin: 2px 0;
+}
+
+.temp-info-col {
+    flex: 1;
+    padding-top: 4px;
+}
+
+.temp-month-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a3a5c;
+    margin-bottom: 10px;
+}
+
+.temp-reading {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.temp-reading strong {
+    color: #333;
+}
+
+.temp-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.temp-delta {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 10px 0 6px;
+}
+
+.temp-delta strong {
+    font-size: 20px;
+}
+
+.temp-delta-bar-container {
+    width: 100%;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.temp-delta-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.2s, background 0.2s;
+}
+
+.temp-viability {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* Month slider */
+.temp-slider-row {
+    padding: 8px 12px 4px;
+}
+
+.temp-slider-row input[type="range"] {
+    width: 100%;
+    margin: 0;
+}
+
+.temp-month-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #aaa;
+    padding: 2px 2px 0;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 520px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-content h2 {
+    color: #1a3a5c;
+    margin-bottom: 12px;
+}
+
+.modal-content h3 {
+    color: #444;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.modal-content p, .modal-content li {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.modal-content ul {
+    padding-left: 20px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
